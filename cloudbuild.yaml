@@ -1,0 +1,19 @@
+steps:
+- name: 'python:3.10'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+        echo "Hello, world!" > /workspace/hello.txt
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['build', '-t', 'us-central1-docker.pkg.dev/${PROJECT_ID}/my-docker-repo/my-image', '.']
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['push', 'us-central1-docker.pkg.dev/${PROJECT_ID}/my-docker-repo/my-image']
+#   artifacts:
+#     objects:
+#       location: gs://crfm-helm-dev/helm-build/
+#       paths: ['']
+artifacts:
+  objects:
+    location: 'gs://crfm-helm-dev/helm-build-2025-03-03/'
+    paths: 'workspace/'
