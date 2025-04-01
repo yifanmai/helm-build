@@ -18,24 +18,21 @@ jobs:
 
       - name: Build crfm-helm-deps
         uses: docker/build-push-action@v6
-        working-directory: docker/crfm-helm-deps
         with:
           load: true
-          push: true
+          context: docker/crfm-helm-deps
           tags: yifanmai/crfm-helm-deps:latest
       
       - name: Build crfm-helm
         uses: docker/build-push-action@v6
-        working-directory: docker/crfm-helm
         with:
           load: true
-          push: true
+          context: docker/crfm-helm
           tags: yifanmai/crfm-helm:latest
 
       - name: Build helm-run
         uses: docker/build-push-action@v6
-        working-directory: docker/helm-run
         with:
-          load: true
           push: true
+          context: docker/crfm-helm-run
           tags: yifanmai/helm-run:latest
