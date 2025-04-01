@@ -4,7 +4,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-docker:
+  # build-crfm-helm-deps:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v3
+
+  #     - name: Log in to Docker Hub
+  #       uses: docker/login-action@v3
+  #       with:
+  #         username: ${{ vars.DOCKER_USERNAME }}
+  #         password: ${{ secrets.DOCKER_PASSWORD }}
+
+  #     - name: Build crfm-helm-deps
+  #       uses: docker/build-push-action@v6
+  #       with:
+  #         push: true
+  #         file: docker/crfm-helm-deps/Dockerfile
+  #         tags: yifanmai/crfm-helm-deps:latest
+
+
+  build-crfm-helm:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
@@ -16,23 +36,17 @@ jobs:
           username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build crfm-helm-deps
+      - name: Build crfm-helm
+        uses: docker/build-push-action@v6
+        with:
+          pull: true
+          load: true
+          file: docker/crfm-helm/Dockerfile
+          tags: yifanmai/crfm-helm:latest
+
+      - name: Build helm-run
         uses: docker/build-push-action@v6
         with:
           push: true
-          file: docker/crfm-helm-deps/Dockerfile
-          tags: yifanmai/crfm-helm-deps:latest
-      
-      # - name: Build crfm-helm
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     load: true
-      #     file: docker/crfm-helm/Dockerfile
-      #     tags: yifanmai/crfm-helm:latest
-
-      # - name: Build helm-run
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     push: true
-      #     file: docker/crfm-helm-run/Dockerfile
-      #     tags: yifanmai/helm-run:latest
+          file: docker/helm-run/Dockerfile
+          tags: yifanmai/helm-run:latest
