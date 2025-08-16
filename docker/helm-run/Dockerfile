@@ -1,2 +1,3 @@
-FROM yifanmai/crfm-helm
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
 ENTRYPOINT ["helm-run"]
