@@ -65,9 +65,11 @@ jobs:
         run: pip install pyyaml jinja2
 
       - name: Update latest tag in cluster config script
-        run: sed -i 's/LATEST = "[0-9]\{8\}"/LATEST = "${{ steps.set-tags.outputs.DATE_TAG }}"/' marin-cluster-configs/update-cluster-configs.py
+        # TODO: Change this
+        run: sed -i 's/LATEST = "[a-z0-9]\{8\}"/LATEST = "${{ steps.set-tags.outputs.HASH_TAG }}"/' marin-cluster-configs/update-cluster-configs.py
 
       - name: Generate cluster configs
+      # TODO: Change this
         run: python marin-cluster-configs/update-cluster-configs.py
 
       - name: Create pull request
