@@ -56,3 +56,11 @@ jobs:
             us-central2-docker.pkg.dev/hai-gcp-models/helm-docker/demo-uvicorn:${{ steps.set-tags.outputs.DATE_TAG }}
             us-central2-docker.pkg.dev/hai-gcp-models/helm-docker/demo-uvicorn:${{ steps.set-tags.outputs.HASH_TAG }}
 
+      - name: Set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
