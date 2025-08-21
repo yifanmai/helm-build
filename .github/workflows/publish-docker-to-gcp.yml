@@ -62,7 +62,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install Python dependencies
-        run: pip install jinja2
+        run: pip install pyyaml jinja2
 
       - name: Update latest tag in cluster config script
         run: sed -i 's/LATEST = "[0-9]\{8\}"/LATEST = "${{ steps.set-tags.outputs.DATE_TAG }}"/' marin-cluster-configs/update-cluster-configs.py
