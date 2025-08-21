@@ -13,6 +13,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Set tags
+        id: set-tags
+        run: |
+          echo "DATE_TAG=`date -u +"%Y%m%d"`" >> "$GITHUB_OUTPUT"
+          echo "HASH_TAG=`git rev-parse --short HEAD`" >> "$GITHUB_OUTPUT"
+
       # Documentation: https://github.com/docker/login-action/blob/v3.5.0/README.md#google-artifact-registry-gar
       - name: Authenticate to Google Cloud
         id: auth
@@ -22,6 +28,7 @@ jobs:
           credentials_json: ${{ secrets.GCP_ARTIFACT_REPOSITORY_SA_KEY }}
           service_account: github-artifact-repository@hai-gcp-models.iam.gserviceaccount.com
 
+      # Documentation: https://github.com/docker/login-action/blob/v3.5.0/README.md#google-artifact-registry-gar
       - name: Login to Google Artifact Registry
         uses: docker/login-action@v3
         with:
@@ -36,3 +43,5 @@ jobs:
           file: docker/demo-uvicorn/Dockerfile
           tags: |
             us-central1-docker.pkg.dev/hai-gcp-models/helm-docker/demo-uvicorn:latest
+            us-central1-docker.pkg.dev/hai-gcp-models/helm-docker/demo-uvicorn:${{ steps.set-tags.outputs.DATE_TAG }}
+            us-central1-docker.pkg.dev/hai-gcp-models/helm-docker/demo-uvicorn:${{ steps.set-tags.outputs.HASH_TAG }}
